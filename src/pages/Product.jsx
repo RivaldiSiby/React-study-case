@@ -1,8 +1,20 @@
 import { useState } from "react";
 import Menu from "../components/Menu";
+import useFetchProduct from "../hooks/useFetchProduct";
 
 export default function Product() {
   const [show, setShow] = useState(false);
+  const { isLoading, data } = useFetchProduct(3);
+
+  const onLogout = () => {
+    const check = confirm("Are you sure you want to logout?");
+    if (check) {
+      return alert("Logout was successful");
+    }
+  };
+
+  console.log(data);
+
   return (
     <>
       <section className="w-full bg-red-500 h-[100vh] flex justify-center items-center">
@@ -21,6 +33,13 @@ export default function Product() {
             menu
           </button>
           <Menu show={show} manuActive="menu3" />
+          {isLoading ? (
+            <p>Loading ...</p>
+          ) : Array.isArray(data) ? (
+            data.map((v) => <p key={v.id}>{v.name}</p>)
+          ) : (
+            <p>Data Tidak Ditemukan</p>
+          )}
         </div>
       </section>
     </>

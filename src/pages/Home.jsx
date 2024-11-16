@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Menu from "../components/Menu";
+import useFetchProduct from "../hooks/useFetchProduct";
 
 export default function Home() {
   const [show, setShow] = useState(false);
+  const { isLoading, data } = useFetchProduct(5);
   return (
     <>
       <section className="w-full bg-red-500 h-[100vh] flex justify-center items-center">
@@ -21,6 +23,7 @@ export default function Home() {
             menu
           </button>
           <Menu show={show} manuActive="menu1" />
+          {isLoading ? <p>Loading ...</p> : <p>{data.name}</p>}
         </div>
       </section>
     </>
